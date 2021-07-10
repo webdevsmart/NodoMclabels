@@ -36,6 +36,7 @@ async function getProducts() {
       })
       .then(() => {});
   }
+  PushCsv(i);
 }
 
 async function PushCsv(fileIndex) {
