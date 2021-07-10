@@ -23,7 +23,7 @@ async function getProducts() {
           });
           console.log("done : ", i);
           i++;
-          if (i == 50) {
+          if (i % 50 == 0) {
             await PushCsv(i);
             products = [];
           }
@@ -39,7 +39,6 @@ async function getProducts() {
 }
 
 async function PushCsv(fileIndex) {
-  await getProducts();
   //  const jsonString = JSON.stringify(products);
   const csv = json2csvParser.parse(products);
 
@@ -47,7 +46,7 @@ async function PushCsv(fileIndex) {
     if (err) {
       console.log("Error writing file", err);
     } else {
-      console.log("Successfully wrote file");
+      console.log("Successfully wrote file", fileIndex);
     }
   });
 }
