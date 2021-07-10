@@ -6,7 +6,7 @@ const json2csvParser = new Parser();
 let products = [];
 let flag = true;
 let i = 1;
-async function getProducts(page) {
+async function getProducts() {
   while (flag) {
     await axios
       .get("http://nodo.mclabels.com/export_prods/0", {
@@ -23,6 +23,10 @@ async function getProducts(page) {
           });
           console.log("done : ", i);
           i++;
+          if (i == 50) {
+            await PushCsv(i);
+            products = [];
+          }
         } else {
           flag = false;
         }
@@ -34,12 +38,12 @@ async function getProducts(page) {
   }
 }
 
-async function PushCsv() {
+async function PushCsv(fileIndex) {
   await getProducts();
-  const jsonString = JSON.stringify(products);
+  //  const jsonString = JSON.stringify(products);
   const csv = json2csvParser.parse(products);
 
-  await fs.writeFile("./newProducts.csv", csv, (err) => {
+  await fs.writeFile(`./newProducts${fileIndex}.csv`, csv, (err) => {
     if (err) {
       console.log("Error writing file", err);
     } else {
@@ -48,4 +52,4 @@ async function PushCsv() {
   });
 }
 
-PushCsv();
+getProducts();
