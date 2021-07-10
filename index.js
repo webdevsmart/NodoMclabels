@@ -23,6 +23,7 @@ async function getProducts(page) {
         console.log(err);
       })
       .then(() => {});
+    console.log("done : ", i);
   }
 }
 
