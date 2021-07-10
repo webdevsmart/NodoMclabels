@@ -17,13 +17,13 @@ async function getProducts(page) {
           await res.data.map((item, key) => {
             products.push(item);
           });
+          console.log("done : ", i);
         }
       })
       .catch((err) => {
         console.log(err);
       })
       .then(() => {});
-    console.log("done : ", i);
   }
 }
 
